@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using PatientRecordSystem.Domain.Repositories;
@@ -10,8 +11,10 @@ using PatientRecordSystem.Resources;
 
 namespace PatientRecordSystem.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
+    [Produces("application/json")]
     public class MetaDataController : ControllerBase
     {
         private readonly IMapper _mapper;

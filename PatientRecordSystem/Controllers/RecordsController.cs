@@ -17,6 +17,7 @@ using PatientRecordSystem.Resources;
 
 namespace PatientRecordSystem.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [Produces("application/json")]
     [ApiController]
