@@ -1,4 +1,4 @@
-﻿import http,{clean } from "./httpService";
+﻿import http, { clean } from "./httpService";
 
 const apiEndpoint = "api/Patients";
 
@@ -8,7 +8,8 @@ function PatientUrl(id) {
 
 export async function getPatients(filter) {
     await http.setJwt();
-    return  http.get(apiEndpoint + '?' + http.toQueryString(filter));
+
+    return http.get(apiEndpoint + '?' + http.toQueryString(filter));
 }
 export async function getPatientReport(PatientId) {
     await http.setJwt();
@@ -26,8 +27,7 @@ export async function savePatient(patient) {
 
     if (patient.id) {
         const body = { ...patient };
-        
-     
+
         return await http.put(PatientUrl(patient.id), body);
     }
 

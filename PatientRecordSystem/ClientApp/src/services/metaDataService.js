@@ -1,4 +1,4 @@
-﻿import http, { clean } from "./httpService";
+﻿import http from "./httpService";
 
 const apiEndpoint = "api/MetaData";
 

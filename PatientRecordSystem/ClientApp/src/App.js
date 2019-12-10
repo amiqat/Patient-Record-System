@@ -11,6 +11,7 @@ import AuthorizeRoute from './components/api-authorization/AuthorizeRoute';
 import ApiAuthorizationRoutes from './components/api-authorization/ApiAuthorizationRoutes';
 import { ApplicationPaths } from './components/api-authorization/ApiAuthorizationConstants';
 import NotFound from "./components/common/notFound";
+
 import { ToastContainer } from "react-toastify";
 import './custom.css'
 import "react-toastify/dist/ReactToastify.css";
@@ -32,6 +33,7 @@ export default class App extends Component {
                         <AuthorizeRoute path='/RecordForm/:id?' component={RecordForm} />
                         <AuthorizeRoute path='/MetaData' component={MetaDataReport} />
                         <AuthorizeRoute path='/PatientReport/:id' component={PatientReport} />
+                   
                         <Route path="/not-found" component={NotFound} />
 
                         <Route path={ApplicationPaths.ApiAuthorizationPrefix} component={ApiAuthorizationRoutes} />

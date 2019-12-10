@@ -9,7 +9,7 @@ axios.interceptors.response.use(null,  error => {
         error.response.status < 500;
 
     if (!expectedError) {
-        logger.log(error);
+        logger.log(error.response.data);
         toast.error("An unexpected error occurrred.");
     }
 
@@ -19,7 +19,9 @@ axios.interceptors.response.use(null,  error => {
 async function setJwt() {
     const token = await authService.getAccessToken();
     if (token)
+       
         axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+     
 }
 function toQueryString(obj) {
     var parts = [];

@@ -86,7 +86,7 @@ namespace PatientRecordSystem
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            app.ConfigureExceptionHandler();
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
@@ -96,6 +96,7 @@ namespace PatientRecordSystem
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
+            app.ConfigureExceptionHandler();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

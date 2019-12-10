@@ -13,7 +13,7 @@ using PatientRecordSystem.Resources;
 
 namespace PatientRecordSystem.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
     public class WeatherForecastController : ControllerBase

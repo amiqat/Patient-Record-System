@@ -26,7 +26,32 @@ namespace PatientRecordSystem.Persistence.Repositories
 
         public async Task<PatientReportResource> GetPatientReport(int id)
         {
-            return await _context.PatientReport.Select(x => new PatientReportResource
+            var PatientDiseaseList = new List<PatientDiseasesResource>();
+            var res = await _context.Patients.Select(x => new
+            {
+                x.Id,
+                x.PatientName,
+                Diseases = x.Records.Select(r => r.DiseaseName).Distinct()
+            }).ToListAsync();
+            var Patient = res.FirstOrDefault(x => x.Id == id);
+            if (Patient.Diseases.Count() > 1)
+            {
+                foreach (var item in res.Where(x => x.Id != id).ToList())
+                {
+                    if (item.Diseases.Count() < 2)
+                        continue;
+                    var commonDiseases = Patient.Diseases.Intersect(item.Diseases).ToList();
+                    if (commonDiseases.Count() < 2)
+                        continue;
+                    PatientDiseaseList.Add(new PatientDiseasesResource
+                    {
+                        PatientName = item.PatientName,
+                        DiseaseList = commonDiseases
+                    });
+                }
+            }
+            PatientDiseaseList = PatientDiseaseList.OrderBy(x => x.PatientName).ToList();
+            var list = await _context.PatientReport.Select(x => new PatientReportResource
             {
                 Id = x.Id,
                 PatientName = x.PatientName,
@@ -34,6 +59,7 @@ namespace PatientRecordSystem.Persistence.Repositories
                 Avg = x.Avg,
                 AvgW = x.AvgW,
                 MostVisitMounth = x.MostVisitMounth,
+                PatientDiseases = PatientDiseaseList,
                 record = _context.Records.Where(x => x.PatientId == id).OrderBy(x => x.TimeOfEntry).Skip(4).Take(1).Select(x => new RecordResource
                 {
                     Id = x.Id,
@@ -42,6 +68,7 @@ namespace PatientRecordSystem.Persistence.Repositories
                     TimeOfEntry = x.TimeOfEntry
                 }).FirstOrDefault()
             }).SingleOrDefaultAsync(x => x.Id == id);
+            return list;
         }
 
         public async Task<PagedList<PatientResource>> ListAsync(QueryStringParameters queryString, Dictionary<string, Expression<Func<PatientResource, object>>> columnsMap)

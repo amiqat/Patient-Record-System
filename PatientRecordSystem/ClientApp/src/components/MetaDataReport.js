@@ -1,7 +1,5 @@
 ﻿import React, { Component } from 'react';
 import { getMetaData } from "../services/metaDataService";
-import { Link } from "react-router-dom";
-
 
 class MetaDataReport extends Component {
     static displayName = MetaDataReport.name;
@@ -11,7 +9,6 @@ class MetaDataReport extends Component {
         this.state = {
             data: [],
             loading: false,
-     
         };
     }
 
@@ -19,10 +16,10 @@ class MetaDataReport extends Component {
         this.setState({ loading: true });
         const response = await this.populateData();
 
-
         await this.setState({
             data: response.data,
         });
+        this.setState({ loading: false });
     }
     RenderList() {
         const { data } = this.state;
@@ -31,48 +28,43 @@ class MetaDataReport extends Component {
             return (<ul></ul>)
         }
 
-            return (
-                <ul>
-                    {data.topMetaData.map(item => 
-                     <li key={item.key}>{item.key}  <span className="badge badge-info">{item.count} </span></li>
-                    )}
+        return (
+            <ul>
+                {data.topMetaData.map(item =>
+                    <li key={item.key}>{item.key}  <span className="badge badge-info">{item.count} </span></li>
+                )}
 
-                </ul>
-            );
-        
-
-   
-}
+            </ul>
+        );
+    }
     render() {
-        const { loading, data } = this.state;
-        
-    
+        const { data, loading } = this.state;
+        if (loading) {
+            return (<p><em>Loading...</em></p>)
+        }
+
         return (
             <React.Fragment>
                 <div className="card p-2">
                     <p>
                         Average namber of used meta-data for patient:  <span className="badge badge-info">{data.averagePerPatient} </span>
-                    </p>    
-                <p>
-                    Max namber of used meta-data for patients:  <span className="badge badge-info">{data.maxPerPatient} </span>
                     </p>
                     <p>
-                       Top 3 highest keys used in meta-data: 
+                        Max namber of used meta-data for patients:  <span className="badge badge-info">{data.maxPerPatient} </span>
                     </p>
-                    
-                        {this.RenderList()}
-                    
-                    </div>
+                    <p>
+                        Top 3 highest keys used in meta-data:
+                    </p>
+
+                    {this.RenderList()}
+
+                </div>
             </React.Fragment>
         );
     }
     async populateData() {
-
         return await getMetaData();
     }
-
-
-
 }
 
 export default MetaDataReport;
