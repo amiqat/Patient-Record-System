@@ -38,6 +38,14 @@ namespace PatientRecordSystem.Controllers
             return Ok(await _patientService.GetPatientReport(id));
         }
 
+        [HttpGet("Search/{id}")]
+        public async Task<ActionResult<IEnumerable<KeyValuePairResource>>> Search(string prfix)
+        {
+            var list = await _patientService.Search(prfix, 50);
+            var data = _mapper.Map<IEnumerable<Patient>, IEnumerable<KeyValuePairResource>>(list);
+            return Ok(data);
+        }
+
         //GET: api/Patients
         [HttpGet]
         public async Task<ActionResult<IEnumerable<PatientResource>>> GetPatients([FromQuery] QueryStringParameters queryParameters)

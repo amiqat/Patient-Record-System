@@ -14,6 +14,8 @@ namespace PatientRecordSystem.Domain.Services
     {
         Task<PatientResponse> GetById(int id);
 
+        Task<IEnumerable<Patient>> Search(string prfix, int size);
+
         Task<PatientReportResource> GetPatientReport(int id);
 
         Task<PagedList<PatientResource>> ListAsync(QueryStringParameters queryString, Dictionary<string, Expression<Func<PatientResource, object>>> columnsMap);

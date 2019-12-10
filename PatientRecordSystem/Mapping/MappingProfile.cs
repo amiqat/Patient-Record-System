@@ -16,6 +16,10 @@ namespace PatientRecordSystem.Mapping
             CreateMap<Record, SaveRecordResource>();
             CreateMap<Patient, SavePatientResource>();
 
+            CreateMap<Patient, KeyValuePairResource>()
+            .ForMember(x => x.Id, opt => opt.MapFrom(x => x.Id))
+            .ForMember(x => x.Name, opt => opt.MapFrom(x => x.PatientName));
+
             // API Resource to Domain
             CreateMap<MetaDataResource, MetaData>();
 

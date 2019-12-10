@@ -8,7 +8,6 @@ using PatientRecordSystem.Helpers;
 using PatientRecordSystem.Resources;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -35,6 +34,11 @@ namespace PatientRecordSystem.Services
                 return new PatientResponse("patient not found.");
             }
             return new PatientResponse(patient);
+        }
+
+        public async Task<IEnumerable<Patient>> Search(string prfix, int size)
+        {
+            return await _patientRepository.Search(prfix, size);
         }
 
         public async Task<PagedList<PatientResource>> ListAsync(QueryStringParameters queryString, Dictionary<string, Expression<Func<PatientResource, object>>> columnsMap)
