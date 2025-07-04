@@ -9,7 +9,7 @@
     "joi-browser": "^13.4.0",
     "jquery": "^3.7.1",
     "merge": "^2.1.1",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "oidc-client": "^1.11.5",
     "react": "^16.0.0",
     "react-data-table-component": "^5.0.0",
