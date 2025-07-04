@@ -54,7 +54,7 @@ namespace PatientRecordSystem.Controllers
                 list.HasNext,
                 list.HasPrevious
             };
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+            Response.Headers["X-Pagination"] = JsonConvert.SerializeObject(metadata);
             return Ok(list);
         }
     }
