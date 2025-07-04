@@ -18,7 +18,7 @@ namespace PatientRecordSystem.Persistence.Contexts
         public DbSet<PatientReport> PatientReport { get; set; }
 
         public ApplicationDbContext(
-            DbContextOptions options) : base(options)
+            DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
 
