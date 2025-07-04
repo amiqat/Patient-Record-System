@@ -57,7 +57,7 @@ namespace PatientRecordSystem
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper(typeof(Startup).Assembly);
 
             services.AddRazorPages();
 
