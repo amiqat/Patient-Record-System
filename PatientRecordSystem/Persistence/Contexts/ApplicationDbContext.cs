@@ -1,14 +1,14 @@
 ﻿using PatientRecordSystem.Models;
-using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using Duende.IdentityServer.EntityFramework.Options;
 using PatientRecordSystem.Domain.Models;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace PatientRecordSystem.Persistence.Contexts
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Patient> Patients { get; set; }
         public DbSet<MetaData> MetaData { get; set; }
@@ -18,8 +18,7 @@ namespace PatientRecordSystem.Persistence.Contexts
         public DbSet<PatientReport> PatientReport { get; set; }
 
         public ApplicationDbContext(
-            DbContextOptions options,
-            IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
+            DbContextOptions options) : base(options)
         {
         }
 

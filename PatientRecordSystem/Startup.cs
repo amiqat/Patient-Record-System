@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
+using System;
 
 using PatientRecordSystem.Models;
 using Microsoft.Extensions.Configuration;
@@ -56,13 +57,7 @@ namespace PatientRecordSystem
             services.AddScoped<IPatientService, PatientService>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            services.AddAutoMapper(typeof(Startup));
-
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
-
-            services.AddAuthentication()
-                .AddIdentityServerJwt();
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddRazorPages();
 
@@ -93,7 +88,6 @@ namespace PatientRecordSystem
             app.UseRouting();
 
             app.UseAuthentication();
-            app.UseIdentityServer();
             app.UseAuthorization();
             app.ConfigureExceptionHandler();
             app.UseEndpoints(endpoints =>
