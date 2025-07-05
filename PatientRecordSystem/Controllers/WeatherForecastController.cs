@@ -45,16 +45,7 @@ namespace PatientRecordSystem.Controllers
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             }).AsQueryable().Sort(queryParameters.SortBy, columnsMap, queryParameters.IsSortAscending), queryParameters.PageNumber, queryParameters.PageSize);
-            var metadata = new
-            {
-                list.TotalCount,
-                list.PageSize,
-                list.CurrentPage,
-                list.TotalPages,
-                list.HasNext,
-                list.HasPrevious
-            };
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+            this.AddPaginationHeader(list);
             return Ok(list);
         }
     }
