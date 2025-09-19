@@ -1,4 +1,4 @@
-﻿using PatientRecordSystem.Domain.Models;
+using PatientRecordSystem.Domain.Models;
 using PatientRecordSystem.Domain.Repositories;
 using PatientRecordSystem.Domain.Services;
 using PatientRecordSystem.Domain.Services.Communication;
@@ -56,17 +56,22 @@ namespace PatientRecordSystem.Services
 
         public async Task<RecordResponse> UpdateAsync(int id, Record record)
         {
-            var existingRecord = await _recordRepository.IsExist(id);
+            var existingRecord = await _recordRepository.GetById(id);
 
-            if (!existingRecord)
+            if (existingRecord == null)
                 return new RecordResponse("Record not found.");
+
+            // Update the existing record with new values
+            existingRecord.DiseaseName = record.DiseaseName;
+            existingRecord.TimeOfEntry = record.TimeOfEntry;
+            existingRecord.PatientId = record.PatientId;
 
             try
             {
-                _recordRepository.Update(record);
+                _recordRepository.Update(existingRecord);
                 await _unitOfWork.CompleteAsync();
 
-                return new RecordResponse(record);
+                return new RecordResponse(existingRecord);
             }
             catch (Exception ex)
             {

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -38,10 +38,10 @@ namespace PatientRecordSystem.Controllers
             return Ok(await _patientService.GetPatientReport(id));
         }
 
-        [HttpGet("Search/{id}")]
-        public async Task<ActionResult<IEnumerable<KeyValuePairResource>>> Search(string prfix)
+        [HttpGet("Search/{prefix}")]
+        public async Task<ActionResult<IEnumerable<KeyValuePairResource>>> Search(string prefix)
         {
-            var list = await _patientService.Search(prfix, 50);
+            var list = await _patientService.Search(prefix, 50);
             var data = _mapper.Map<IEnumerable<Patient>, IEnumerable<KeyValuePairResource>>(list);
             return Ok(data);
         }
