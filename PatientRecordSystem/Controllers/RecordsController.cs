@@ -46,16 +46,7 @@ namespace PatientRecordSystem.Controllers
             };
             var list = await _recordService.ListAsync(queryParameters, columnsMap);
             var recordResource = _mapper.Map<IEnumerable<Record>, IEnumerable<RecordResource>>(list);
-            var metadata = new
-            {
-                list.TotalCount,
-                list.PageSize,
-                list.CurrentPage,
-                list.TotalPages,
-                list.HasNext,
-                list.HasPrevious
-            };
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+            this.AddPaginationHeader(list);
             return Ok(recordResource);
         }
 

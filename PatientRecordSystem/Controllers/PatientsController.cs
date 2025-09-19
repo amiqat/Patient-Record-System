@@ -59,16 +59,7 @@ namespace PatientRecordSystem.Controllers
                 ["lastEntry"] = v => v.LastEntry
             };
             var list = await _patientService.ListAsync(queryParameters, columnsMap);
-            var metadata = new
-            {
-                list.TotalCount,
-                list.PageSize,
-                list.CurrentPage,
-                list.TotalPages,
-                list.HasNext,
-                list.HasPrevious
-            };
-            Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(metadata));
+            this.AddPaginationHeader(list);
             return Ok(list);
         }
 
